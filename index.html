@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bliss Phones & Laptops | Masaka's Best</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -29,7 +28,9 @@
         <button class="tab-btn" onclick="filterItems('samsung', 'phone')">Samsung</button>
         <button class="tab-btn" onclick="filterItems('apple', 'phone')">iPhone</button>
         <button class="tab-btn" onclick="filterItems('infinix', 'phone')">Infinix</button>
+        <button class="tab-btn" onclick="filterItems('itel', 'phone')">itel</button>
     </div>
+
     <div id="laptop-tabs" class="brand-tabs" style="display: none;">
         <button class="tab-btn active" onclick="filterItems('all', 'laptop')">All Laptops</button>
         <button class="tab-btn" onclick="filterItems('hp', 'laptop')">HP</button>
@@ -111,38 +112,6 @@
             </div>
 
         </div>
-        <section class="location-section container">
-            <div class="location-card">
-                <div class="location-info">
-                    <h2 class="section-title">Visit Our Masaka Branch</h2>
-                    <p class="address">📍 Elgin Road, Opposite City View Complex</p>
-                    <p class="landmark">Near <strong>Mpuuga Plaza</strong> and <strong>Mogas Masaka</strong>.</p>
-                    
-                    <div class="hours">
-                        <h3>Opening Hours</h3>
-                        <ul>
-                            <li><span>Mon - Sat:</span> 8:00 AM - 8:00 PM</li>
-                            <li><span>Sundays:</span> 10:00 AM - 4:00 PM</li>
-                        </ul>
-                    </div>
-        
-                    <div class="location-actions">
-                        <a href="https://www.google.com/maps/search/Elgin+Road+Masaka+Uganda" target="_blank" class="map-btn">Get Directions</a>
-                        <a href="tel:+256708218843" class="call-btn">Call for Support</a>
-                    </div>
-                </div>
-                <div class="map-preview">
-                    <div class="map-placeholder">
-                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=600&q=80" alt="Masaka Map">
-                        <div class="map-overlay">
-                            <span>Find us in Masaka City Centre</span>
-                        </div>
-                    </div>
-                </div>
-                
-        <button class="tab-btn" onclick="filterItems('itel', 'phone')">itel</button>
-            </div>
-        </section>
     </main>
 
     <a href="https://wa.me/256708218843" class="float-wa">
@@ -150,161 +119,39 @@
         <span>Chat with Bliss</span>
     </a>
 
-<script type="module">
-  // Import the functions we need from the Firebase SDKs
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    <script>
+        function switchSector(sector) {
+            // Hide all items first
+            document.querySelectorAll('.phone-item, .laptop-item').forEach(el => el.style.display = 'none');
+            
+            // Toggle Brand Tab Bars
+            document.getElementById('phone-tabs').style.display = (sector === 'phone') ? 'flex' : 'none';
+            document.getElementById('laptop-tabs').style.display = (sector === 'laptop') ? 'flex' : 'none';
+            
+            // Show all items for selected sector
+            const items = document.querySelectorAll('.' + sector + '-item');
+            items.forEach(el => el.style.display = 'block');
 
-  // Your Firebase configuration (Using the keys you just found)
-  const firebaseConfig = {
-    apiKey: "AIzaSyDk5Ho72efikICUocOlwoHBtlsjzMuwSRc",
-    authDomain: "blissphones-a47a4.firebaseapp.com",
-    databaseURL: "https://blissphones-a47a4-default-rtdb.firebaseio.com",
-    projectId: "blissphones-a47a4",
-    storageBucket: "blissphones-a47a4.firebasestorage.app",
-    messagingSenderId: "360671329631",
-    appId: "1:360671329631:web:59d2082f1ff3d46c594aea",
-    measurementId: "G-4R44EWJS8S"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const productsRef = ref(db, 'products');
-
-  // --- ADMIN FUNCTION: Save product to Google Cloud ---
-  window.generateProduct = function() {
-    const newProd = {
-        type: document.getElementById('new-type').value,
-        brand: document.getElementById('new-brand').value.toLowerCase(),
-        model: document.getElementById('new-model').value,
-        price: document.getElementById('new-price').value,
-        img: document.getElementById('new-img').value,
-        timestamp: Date.now()
-    };
-
-    push(productsRef, newProd)
-      .then(() => {
-        alert("Success! " + newProd.model + " is now live on Bliss Phones.");
-        document.getElementById('admin-panel').style.display = 'none';
-      })
-      .catch((error) => alert("Error: " + error.message));
-  };
-
-  // --- VIEWER FUNCTION: Load products for your customers ---
-  onValue(productsRef, (snapshot) => {
-    const data = snapshot.val();
-    const grid = document.getElementById('master-grid');
-    grid.innerHTML = ''; // Clear the grid before loading
-
-    if (!data) {
-        grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">No products in stock yet. Use the Admin panel to add some!</p>';
-        return;
-    }
-
-    // Loop through the database and create the cards
-    for (let id in data) {
-      const item = data[id];
-      const card = `
-        <div class="card ${item.type}-item" data-brand="${item.brand}">
-            <div class="img-box"><img src="${item.img}" alt="${item.model}"></div>
-            <div class="info">
-                <span class="tag ${item.brand}">${item.brand.toUpperCase()}</span>
-                <h3>${item.model}</h3>
-                <p class="price">UGX ${item.price}</p>
-                <a href="https://wa.me/256708218843?text=I want to buy the ${item.model}" class="buy-btn">Order on WhatsApp</a>
-            </div>
-        </div>
-      `;
-      grid.innerHTML += card;
-    }
-  });
-
-  // --- TAB LOGIC (Make sure this works with Firebase items) ---
-  window.switchSector = function(sector) {
-      const allItems = document.querySelectorAll('.card');
-      const phoneTabs = document.getElementById('phone-tabs');
-      const laptopTabs = document.getElementById('laptop-tabs');
-
-      // Toggle the brand tab bars
-      phoneTabs.style.display = (sector === 'phone') ? 'flex' : 'none';
-      laptopTabs.style.display = (sector === 'laptop') ? 'flex' : 'none';
-
-      // Update Sector Buttons
-      document.querySelectorAll('.sector-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-
-      // Show/Hide items based on type
-      allItems.forEach(item => {
-          if (item.classList.contains(sector + '-item')) {
-              item.style.display = 'block';
-          } else {
-              item.style.display = 'none';
-          }
-      });
-  };
-let clickCount = 0;
-let clickTimer;
-
-window.adminClickCount = function() {
-    clickCount++;
-    
-    // Reset count if you don't click fast enough
-    clearTimeout(clickTimer);
-    clickTimer = setTimeout(() => { clickCount = 0; }, 500);
-
-    // If you click 3 times fast...
-    if (clickCount === 3) {
-        clickCount = 0;
-        const password = prompt("🔐 Enter Bliss Admin Password:");
-        if (password === "bliss2026") {
-            document.getElementById('admin-panel').style.display = 'block';
-        } else {
-            alert("❌ Access Denied!");
+            // Update Sector Button UI
+            document.querySelectorAll('.sector-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
         }
-    }
-};
-</script>
-  <div style="padding: 40px; text-align: center; border-top: 1px solid #eee;">
-    <p style="color: #ccc; font-size: 0.8rem;">© 2026 Bliss Phones & Laptops Masaka</p>
-    <div onclick="adminClickCount()" style="color: transparent; cursor: pointer; user-select: none; padding: 10px;">
-        ADMIN_ACCESS_POINT
-    </div>
-</div>
 
-<div id="admin-panel" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; color: white; padding: 20px; overflow-y: auto;">
-    <div style="max-width: 500px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 20px;">
-        <h2>Bliss Admin Panel</h2>
-        <p>Add new stock to the website</p>
-        <hr style="margin: 15px 0;">
-        
-        <label>Product Type:</label><br>
-        <select id="new-type" style="width: 100%; padding: 10px; margin-bottom: 15px;">
-            <option value="phone">Smartphone</option>
-            <option value="laptop">Laptop</option>
-        </select>
+        function filterItems(brand, sector) {
+            const items = document.querySelectorAll('.' + sector + '-item');
+            items.forEach(item => {
+                if(brand === 'all' || item.getAttribute('data-brand') === brand) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
 
-        <label>Brand Name:</label><br>
-        <input type="text" id="new-brand" placeholder="e.g., Samsung, HP" style="width: 100%; padding: 10px; margin-bottom: 15px;">
-
-        <label>Model Name:</label><br>
-        <input type="text" id="new-model" placeholder="e.g., Galaxy S24" style="width: 100%; padding: 10px; margin-bottom: 15px;">
-
-        <label>Price (UGX):</label><br>
-        <input type="text" id="new-price" placeholder="e.g., 1,500,000" style="width: 100%; padding: 10px; margin-bottom: 15px;">
-
-        <label>Photo URL:</label><br>
-        <input type="text" id="new-img" placeholder="Paste image link here" style="width: 100%; padding: 10px; margin-bottom: 15px;">
-
-        <button onclick="generateProduct()" style="width: 100%; padding: 15px; background: #2563eb; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Add to Website Now</button>
-        <button onclick="document.getElementById('admin-panel').style.display='none'" style="width: 100%; margin-top: 10px; background: none; color: gray; border: none; cursor: pointer;">Cancel</button>
-    </div>
-</div>
+            // Update Brand Button UI
+            const btns = event.target.parentElement.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
-
-            
-
-
-
-
