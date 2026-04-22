@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bliss Phones & Laptops | Masaka's Best</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">BLISS<span>PHONES</span></div>
+            <div class="contact-info">
+                <a href="tel:+256708218843">📞 0708 218843</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sector-switcher">
+        <button class="sector-btn active" onclick="switchSector('phone')">Smartphones</button>
+        <button class="sector-btn" onclick="switchSector('laptop')">Laptops & PC</button>
+    </div>
+
+    <div id="phone-tabs" class="brand-tabs">
+        <button class="tab-btn active" onclick="filterItems('all', 'phone')">All Phones</button>
+        <button class="tab-btn" onclick="filterItems('samsung', 'phone')">Samsung</button>
+        <button class="tab-btn" onclick="filterItems('apple', 'phone')">iPhone</button>
+        <button class="tab-btn" onclick="filterItems('infinix', 'phone')">Infinix</button>
+        <button class="tab-btn" onclick="filterItems('itel', 'phone')">itel</button>
+    </div>
+
+    <div id="laptop-tabs" class="brand-tabs" style="display: none;">
+        <button class="tab-btn active" onclick="filterItems('all', 'laptop')">All Laptops</button>
+        <button class="tab-btn" onclick="filterItems('hp', 'laptop')">HP</button>
+        <button class="tab-btn" onclick="filterItems('dell', 'laptop')">Dell</button>
+        <button class="tab-btn" onclick="filterItems('apple-laptop', 'laptop')">MacBook</button>
+    </div>
+
+    <main class="container">
+        <div id="master-grid" class="product-grid">
+            
+            <div class="card phone-item" data-brand="samsung">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1707133908432-8df93033509b?auto=format&fit=crop&w=500&q=80" alt="S24 Ultra"></div>
+                <div class="info">
+                    <span class="tag samsung">Samsung</span>
+                    <h3>Galaxy S24 Ultra</h3>
+                    <p class="price">UGX 5,200,000</p>
+                    <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="card phone-item" data-brand="apple">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&w=500&q=80" alt="iPhone 15"></div>
+                <div class="info">
+                    <span class="tag apple">iPhone</span>
+                    <h3>iPhone 15 Pro Max</h3>
+                    <p class="price">UGX 5,450,000</p>
+                    <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="card phone-item" data-brand="infinix">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=500&q=80" alt="Infinix"></div>
+                <div class="info">
+                    <span class="tag infinix">Infinix</span>
+                    <h3>Infinix Note 40 Pro</h3>
+                    <p class="price">UGX 1,180,000</p>
+                    <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="card phone-item" data-brand="itel">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=500&q=80" alt="itel"></div>
+                <div class="info">
+                    <span class="tag itel">itel</span>
+                    <h3>itel S24 Plus</h3>
+                    <p class="price">UGX 595,000</p>
+                    <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="card laptop-item" data-brand="hp" style="display: none;">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=500&q=80" alt="HP Laptop"></div>
+                <div class="info">
+                    <span class="tag hp">HP</span>
+                    <h3>HP EliteBook 840 G5</h3>
+                    <p class="price">UGX 1,750,000</p>
+                    <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="card laptop-item" data-brand="dell" style="display: none;">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=500&q=80" alt="Dell Laptop"></div>
+                <div class="info">
+                    <span class="tag dell">Dell</span>
+                    <h3>Dell Latitude 7490</h3>
+                    <p class="price">UGX 1,350,000</p>
+                    <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="card laptop-item" data-brand="apple-laptop" style="display: none;">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=500&q=80" alt="MacBook"></div>
+                <div class="info">
+                    <span class="tag apple">Apple</span>
+                    <h3>MacBook Air M1</h3>
+                    <p class="price">UGX 3,600,000</p>
+                    <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+
+        </div>
+        <section class="location-section container">
+            <div class="location-card">
+                <div class="location-info">
+                    <h2 class="section-title">Visit Our Masaka Branch</h2>
+                    <p class="address">📍 Elgin Road, Opposite City View Complex</p>
+                    <p class="landmark">Near <strong>Mpuuga Plaza</strong> and <strong>Mogas Masaka</strong>.</p>
+                    
+                    <div class="hours">
+                        <h3>Opening Hours</h3>
+                        <ul>
+                            <li><span>Mon - Sat:</span> 8:00 AM - 8:00 PM</li>
+                            <li><span>Sundays:</span> 10:00 AM - 4:00 PM</li>
+                        </ul>
+                    </div>
+        
+                    <div class="location-actions">
+                        <a href="https://www.google.com/maps/search/Elgin+Road+Masaka+Uganda" target="_blank" class="map-btn">Get Directions</a>
+                        <a href="tel:+256708218843" class="call-btn">Call for Support</a>
+                    </div>
+                </div>
+                <div class="map-preview">
+                    <div class="map-placeholder">
+                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=600&q=80" alt="Masaka Map">
+                        <div class="map-overlay">
+                            <span>Find us in Masaka City Centre</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="https://wa.me/256708218843" class="float-wa">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
+        <span>Chat with Bliss</span>
+    </a>
+
+    <script>
+        function switchSector(sector) {
+            // Hide all items first
+            document.querySelectorAll('.phone-item, .laptop-item').forEach(el => el.style.display = 'none');
+            
+            // Toggle Brand Tab Bars
+            document.getElementById('phone-tabs').style.display = (sector === 'phone') ? 'flex' : 'none';
+            document.getElementById('laptop-tabs').style.display = (sector === 'laptop') ? 'flex' : 'none';
+            
+            // Show all items for selected sector
+            const items = document.querySelectorAll('.' + sector + '-item');
+            items.forEach(el => el.style.display = 'block');
+
+            // Update Sector Button UI
+            document.querySelectorAll('.sector-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function filterItems(brand, sector) {
+            const items = document.querySelectorAll('.' + sector + '-item');
+            items.forEach(item => {
+                if(brand === 'all' || item.getAttribute('data-brand') === brand) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Update Brand Button UI
+            const btns = event.target.parentElement.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

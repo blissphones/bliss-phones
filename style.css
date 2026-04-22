@@ -1,0 +1,384 @@
+/* --- LOCATION STYLES --- */
+.location-section {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.location-card {
+    background: var(--white);
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f6;
+}
+
+.location-info {
+    padding: 50px;
+}
+
+.location-info h2 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.address {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.landmark {
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+.hours h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.hours ul {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.hours li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e2e8f0;
+    font-weight: 600;
+}
+
+.location-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.map-btn, .call-btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.map-btn {
+    background: var(--dark);
+    color: white;
+}
+
+.call-btn {
+    background: var(--bg-light);
+    color: var(--dark);
+    border: 1px solid #cbd5e1;
+}
+
+/* Map Graphics */
+.map-preview {
+    position: relative;
+    background: #e2e8f0;
+}
+
+.map-placeholder {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.map-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.9);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* RESPONSIVE LOCATION */
+@media (max-width: 900px) {
+    .location-card {
+        grid-template-columns: 1fr;
+    }
+    .map-preview {
+        height: 300px;
+    }
+    .location-info {
+        padding: 30px;
+    }
+}
+/* --- GLOBAL THEME --- */
+:root {
+    --ug-red: #D90000;      /* Branding color */
+    --accent-blue: #2563eb; /* Tech blue */
+    --dark: #0f172a;        /* Deep navy for text */
+    --white: #ffffff;
+    --bg-light: #f8fafc;    /* Soft background */
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- NAVIGATION --- */
+.navbar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px); /* Premium glass effect */
+    padding: 15px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.logo span {
+    color: var(--ug-red);
+}
+
+.contact-info a {
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--dark);
+    font-size: 0.9rem;
+    border: 2px solid var(--dark);
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: 0.3s;
+}
+
+.contact-info a:hover {
+    background: var(--dark);
+    color: var(--white);
+}
+
+/* --- TAB SWITCHING UI --- */
+.sector-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 30px 20px 10px;
+}
+
+.sector-btn {
+    padding: 14px 28px;
+    border-radius: 16px;
+    border: none;
+    background: #e2e8f0;
+    color: #64748b;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sector-btn.active {
+    background: var(--dark);
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+.brand-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 20px 30px;
+    overflow-x: auto; /* Allows scrolling on phone */
+    scrollbar-width: none; /* Hides scrollbar on Firefox */
+}
+
+.brand-tabs::-webkit-scrollbar { display: none; } /* Hides scrollbar on Chrome */
+
+.tab-btn {
+    padding: 10px 22px;
+    border-radius: 50px;
+    border: 1px solid #cbd5e1;
+    background: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: var(--accent-blue);
+    color: var(--white);
+    border-color: var(--accent-blue);
+}
+
+/* --- PRODUCT CARDS --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--card-shadow);
+}
+
+.img-box {
+    height: 240px;
+    background: #f1f5f9;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.img-box img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+    transition: 0.5s ease;
+}
+
+.card:hover .img-box img {
+    transform: scale(1.1);
+}
+
+.tag {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Tag Colors */
+.samsung { background: #e0e7ff; color: #4338ca; }
+.apple { background: #f3f4f6; color: #374151; }
+.infinix { background: #dcfce7; color: #166534; }
+.itel { background: #fee2e2; color: #991b1b; }
+.hp { background: #fef3c7; color: #92400e; }
+.dell { background: #e0f2fe; color: #0369a1; }
+
+.price {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--ug-red);
+    margin: 12px 0;
+}
+
+.buy-btn {
+    display: block;
+    background: var(--dark);
+    color: var(--white);
+    text-align: center;
+    padding: 14px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+    margin-top: auto;
+}
+
+.buy-btn:hover {
+    background: var(--ug-red);
+    box-shadow: 0 4px 15px rgba(217, 0, 0, 0.3);
+}
+
+/* --- WHATSAPP FLOATING BUTTON --- */
+.float-wa {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #25D366;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+    z-index: 2000;
+    transition: 0.3s;
+}
+
+.float-wa:hover {
+    transform: scale(1.05);
+}
+
+.float-wa img {
+    width: 28px;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+    .navbar { padding: 12px 5%; }
+    .logo { font-size: 1.3rem; }
+    .contact-info a { font-size: 0.8rem; padding: 6px 12px; }
+    
+    .sector-btn { padding: 10px 20px; font-size: 0.85rem; }
+    
+    .product-grid {
+        grid-template-columns: 1fr; /* Single column on phone */
+        gap: 20px;
+    }
+    
+    .float-wa span { display: none; } /* Show only icon on small mobile */
+    .float-wa { padding: 14px; border-radius: 50%; }
+}
