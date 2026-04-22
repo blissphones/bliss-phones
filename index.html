@@ -150,74 +150,101 @@
         <span>Chat with Bliss</span>
     </a>
 
-    <script>
-        function switchSector(sector) {
-            // Hide all items first
-            document.querySelectorAll('.phone-item, .laptop-item').forEach(el => el.style.display = 'none');
-            
-            // Toggle Brand Tab Bars
-            document.getElementById('phone-tabs').style.display = (sector === 'phone') ? 'flex' : 'none';
-            document.getElementById('laptop-tabs').style.display = (sector === 'laptop') ? 'flex' : 'none';
-            
-            // Show all items for selected sector
-            const items = document.querySelectorAll('.' + sector + '-item');
+<script type="module">
+  // Import the functions we need from the Firebase SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-            // Update Sector Button UI
-            document.querySelectorAll('.sector-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
+  // Your Firebase configuration (Using the keys you just found)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDk5Ho72efikICUocOlwoHBtlsjzMuwSRc",
+    authDomain: "blissphones-a47a4.firebaseapp.com",
+    databaseURL: "https://blissphones-a47a4-default-rtdb.firebaseio.com",
+    projectId: "blissphones-a47a4",
+    storageBucket: "blissphones-a47a4.firebasestorage.app",
+    messagingSenderId: "360671329631",
+    appId: "1:360671329631:web:59d2082f1ff3d46c594aea",
+    measurementId: "G-4R44EWJS8S"
+  };
 
-        function filterItems(brand, sector) {
-            const items = document.querySelectorAll('.' + sector + '-item');
-            items.forEach(item => {
-                if(brand === 'all' || item.getAttribute('data-brand') === brand) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const productsRef = ref(db, 'products');
 
-            // Update Brand Button UI
-            const btns = event.target.parentElement.querySelectorAll('.tab-btn');
-            btns.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-        function openAdmin() {
-    let password = prompt("Enter Bliss Admin Password:");
-    if (password === "bliss2026") { // Change this to your secret password
-        document.getElementById('admin-panel').style.display = 'block';
-    } else {
-        alert("Wrong password!");
+  // --- ADMIN FUNCTION: Save product to Google Cloud ---
+  window.generateProduct = function() {
+    const newProd = {
+        type: document.getElementById('new-type').value,
+        brand: document.getElementById('new-brand').value.toLowerCase(),
+        model: document.getElementById('new-model').value,
+        price: document.getElementById('new-price').value,
+        img: document.getElementById('new-img').value,
+        timestamp: Date.now()
+    };
+
+    push(productsRef, newProd)
+      .then(() => {
+        alert("Success! " + newProd.model + " is now live on Bliss Phones.");
+        document.getElementById('admin-panel').style.display = 'none';
+      })
+      .catch((error) => alert("Error: " + error.message));
+  };
+
+  // --- VIEWER FUNCTION: Load products for your customers ---
+  onValue(productsRef, (snapshot) => {
+    const data = snapshot.val();
+    const grid = document.getElementById('master-grid');
+    grid.innerHTML = ''; // Clear the grid before loading
+
+    if (!data) {
+        grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">No products in stock yet. Use the Admin panel to add some!</p>';
+        return;
     }
-}
 
-function generateProduct() {
-    const type = document.getElementById('new-type').value;
-    const brand = document.getElementById('new-brand').value.toLowerCase();
-    const model = document.getElementById('new-model').value;
-    const price = document.getElementById('new-price').value;
-    const img = document.getElementById('new-img').value;
-
-    const newCard = `
-        <div class="card ${type}-item" data-brand="${brand}">
-            <div class="img-box"><img src="${img}" alt="${model}"></div>
+    // Loop through the database and create the cards
+    for (let id in data) {
+      const item = data[id];
+      const card = `
+        <div class="card ${item.type}-item" data-brand="${item.brand}">
+            <div class="img-box"><img src="${item.img}" alt="${item.model}"></div>
             <div class="info">
-                <span class="tag ${brand}">${brand.toUpperCase()}</span>
-                <h3>${model}</h3>
-                <p class="price">UGX ${price}</p>
-                <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+                <span class="tag ${item.brand}">${item.brand.toUpperCase()}</span>
+                <h3>${item.model}</h3>
+                <p class="price">UGX ${item.price}</p>
+                <a href="https://wa.me/256708218843?text=I want to buy the ${item.model}" class="buy-btn">Order on WhatsApp</a>
             </div>
         </div>
-    `;
+      `;
+      grid.innerHTML += card;
+    }
+  });
 
-    // Add to the grid
-    document.getElementById('master-grid').innerHTML += newCard;
-    
-    // Close panel
-    document.getElementById('admin-panel').style.display = 'none';
-    alert(model + " has been added to your local view! Note: To keep it forever, you must copy the new code to GitHub.");
-}
-    </script>
+  // --- TAB LOGIC (Make sure this works with Firebase items) ---
+  window.switchSector = function(sector) {
+      const allItems = document.querySelectorAll('.card');
+      const phoneTabs = document.getElementById('phone-tabs');
+      const laptopTabs = document.getElementById('laptop-tabs');
+
+      // Toggle the brand tab bars
+      phoneTabs.style.display = (sector === 'phone') ? 'flex' : 'none';
+      laptopTabs.style.display = (sector === 'laptop') ? 'flex' : 'none';
+
+      // Update Sector Buttons
+      document.querySelectorAll('.sector-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Show/Hide items based on type
+      allItems.forEach(item => {
+          if (item.classList.contains(sector + '-item')) {
+              item.style.display = 'block';
+          } else {
+              item.style.display = 'none';
+          }
+      });
+  };
+
+</script>
     <div style="text-align: center; padding: 20px;">
     <button onclick="openAdmin()" style="opacity: 0.1; background: none; border: none; cursor: pointer;">Admin Access</button>
 </div>
