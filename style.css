@@ -1,3 +1,58 @@
+/* --- Designer Credit Styles --- */
+.designer-credit {
+    padding: 30px 20px 50px;
+    background: var(--bg);
+    text-align: center;
+}
+
+.credit-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.designer-credit .divider {
+    height: 1px;
+    width: 60px;
+    background: #cbd5e1;
+    margin: 0 auto 20px;
+}
+
+.designer-credit p {
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.code-icon {
+    color: var(--primary);
+    font-family: monospace;
+    font-weight: 800;
+    margin-right: 5px;
+}
+
+.designer-name {
+    color: var(--dark);
+    font-weight: 800;
+    background: linear-gradient(120deg, #2563eb, #d90000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-left: 4px;
+}
+
+.tech-stack {
+    margin-top: 10px;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Hover effect to show off */
+.designer-credit:hover .designer-name {
+    filter: brightness(1.2);
+    transition: 0.3s;
+}
 /* --- LOCATION STYLES --- */
 .location-section {
     margin-top: 60px;
