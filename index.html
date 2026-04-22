@@ -29,7 +29,6 @@
         <button class="tab-btn" onclick="filterItems('samsung', 'phone')">Samsung</button>
         <button class="tab-btn" onclick="filterItems('apple', 'phone')">iPhone</button>
         <button class="tab-btn" onclick="filterItems('infinix', 'phone')">Infinix</button>
-        <button class="tab-btn" onclick="filterItems('itel', 'phone')">itel</button>
     </div>
 
     <div id="laptop-tabs" class="brand-tabs" style="display: none;">
@@ -141,6 +140,8 @@
                         </div>
                     </div>
                 </div>
+                
+        <button class="tab-btn" onclick="filterItems('itel', 'phone')">itel</button>
             </div>
         </section>
     </main>
@@ -161,7 +162,6 @@
             
             // Show all items for selected sector
             const items = document.querySelectorAll('.' + sector + '-item');
-            items.forEach(el => el.style.display = 'block');
 
             // Update Sector Button UI
             document.querySelectorAll('.sector-btn').forEach(btn => btn.classList.remove('active'));
@@ -183,6 +183,75 @@
             btns.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
         }
+        function openAdmin() {
+    let password = prompt("Enter Bliss Admin Password:");
+    if (password === "bliss2026") { // Change this to your secret password
+        document.getElementById('admin-panel').style.display = 'block';
+    } else {
+        alert("Wrong password!");
+    }
+}
+
+function generateProduct() {
+    const type = document.getElementById('new-type').value;
+    const brand = document.getElementById('new-brand').value.toLowerCase();
+    const model = document.getElementById('new-model').value;
+    const price = document.getElementById('new-price').value;
+    const img = document.getElementById('new-img').value;
+
+    const newCard = `
+        <div class="card ${type}-item" data-brand="${brand}">
+            <div class="img-box"><img src="${img}" alt="${model}"></div>
+            <div class="info">
+                <span class="tag ${brand}">${brand.toUpperCase()}</span>
+                <h3>${model}</h3>
+                <p class="price">UGX ${price}</p>
+                <a href="https://wa.me/256708218843" class="buy-btn">Order on WhatsApp</a>
+            </div>
+        </div>
+    `;
+
+    // Add to the grid
+    document.getElementById('master-grid').innerHTML += newCard;
+    
+    // Close panel
+    document.getElementById('admin-panel').style.display = 'none';
+    alert(model + " has been added to your local view! Note: To keep it forever, you must copy the new code to GitHub.");
+}
     </script>
+    <div style="text-align: center; padding: 20px;">
+    <button onclick="openAdmin()" style="opacity: 0.1; background: none; border: none; cursor: pointer;">Admin Access</button>
+</div>
+
+<div id="admin-panel" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; color: white; padding: 20px; overflow-y: auto;">
+    <div style="max-width: 500px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 20px;">
+        <h2>Bliss Admin Panel</h2>
+        <p>Add new stock to the website</p>
+        <hr style="margin: 15px 0;">
+        
+        <label>Product Type:</label><br>
+        <select id="new-type" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+            <option value="phone">Smartphone</option>
+            <option value="laptop">Laptop</option>
+        </select>
+
+        <label>Brand Name:</label><br>
+        <input type="text" id="new-brand" placeholder="e.g., Samsung, HP" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+        <label>Model Name:</label><br>
+        <input type="text" id="new-model" placeholder="e.g., Galaxy S24" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+        <label>Price (UGX):</label><br>
+        <input type="text" id="new-price" placeholder="e.g., 1,500,000" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+        <label>Photo URL:</label><br>
+        <input type="text" id="new-img" placeholder="Paste image link here" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+        <button onclick="generateProduct()" style="width: 100%; padding: 15px; background: #2563eb; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Add to Website Now</button>
+        <button onclick="document.getElementById('admin-panel').style.display='none'" style="width: 100%; margin-top: 10px; background: none; color: gray; border: none; cursor: pointer;">Cancel</button>
+    </div>
+</div>
 </body>
 </html>
+
+            items.forEach(el => el.style.display = 'block');
